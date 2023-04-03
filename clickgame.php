@@ -37,17 +37,10 @@
             }
         }
         
-       
-        
     } else {
         $player2_count = 33;
     }
     
-    if($player1_count == $player2_count){
-        $alert = "<script type ='text/javascript'>alert('戻って選びなおしてください');</script>";
-        echo $alert;
-        echo '<a href="javascript:history.back()">戻って選び直す</a><br>';
-    }
     
     //プレイ順番のカウント
     if(isset($_POST['player_turn'])){
@@ -59,9 +52,9 @@
     
     echo "順番:".$player_turn;
  
-        //ラジオボタンでクリック
-        echo '<form action="clickgame.php" method="post">';
-        
+    //ラジオボタンでクリック
+    echo '<form action="clickgame.php" method="post">';
+    
         if( $player_turn %2 == 1 ){
             //player1の入力
             echo "プレイヤー1の番です<br>";
@@ -91,13 +84,25 @@
     echo "1:".$player1_count."<br>";
     echo "2:".$player2_count."<br>";
     
-//     if($player1_count == $player2_count){
-//         $back = "<scriptjavascript:history.back()";
-//         echo $back;
-// //         $alert = "<script type ='text/javascript'>alert('選びなおしてください');</script>";
-// //         echo $alert;
-//     }
+    //プレイヤーの入力エラー判定
+    $player_ary_err = array(0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33); 
+    
+    $player1_ary_err_flag = in_array($player1_count, $player_ary_err);
+    $player2_ary_err_flag = in_array($player2_count, $player_ary_err);
+    
+    //同じ値じゃなかったらTRUE　（エンカウントしてたらFALSE）
+    $player_encnt_flag = ($player1_count != $player2_count);
+    
+    //すべてTRUEだったらTRUE、1つでもFALSEがあればFALSE＋文言表示
+    
+    $errer_flag = ($player_encnt_flag && $player1_ary_err_flag && $player2_ary_err_flag );
+        if(isset($errer_flag)){
+            if($errer_flag == FALSE){
+            echo "エラーフラグが立っています<br>";
+            }
+        }
 
+    
     if($player1_count == 33){
         echo "プレイヤー1の勝利！";
         echo '<br><a href="clickgame.php">もう1回遊ぶ</a><br>';
