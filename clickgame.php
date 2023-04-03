@@ -16,6 +16,7 @@
             } 
         }
         
+               
     } else {
         $player1_count = 0;
     }
@@ -36,30 +37,55 @@
             }
         }
         
+       
+        
     } else {
         $player2_count = 33;
     }
     
+    if($player1_count == $player2_count){
+        $alert = "<script type ='text/javascript'>alert('戻って選びなおしてください');</script>";
+        echo $alert;
+        echo '<a href="javascript:history.back()">戻って選び直す</a><br>';
+    }
     
+    //プレイ順番のカウント
+    if(isset($_POST['player_turn'])){
+        $player_turn = $_POST['player_turn'];
+        $player_turn += 1;
+    } else {
+        $player_turn = 1;
+    }
     
-    //ラジオボタンでクリック
-    echo '<form action="clickgame.php" method="post">';
-        //player1の入力
-        echo '<label><input type="radio" name="player1_action" value="up">↑</label>';
-        echo '<label><input type="radio" name="player1_action" value="left">←</label>';
-        echo '<label><input type="radio" name="player1_action" value="right">→</label>';
-        echo '<label><input type="radio" name="player1_action" value="down">↓</label>';
-        echo '<input type="hidden" name="player1_count" value="'.$player1_count.'">';
-        echo '<input type="hidden" name="player2_count" value="'.$player2_count.'">';
-        echo '<input type="submit" value="プレイヤー1を移動">';
-        //player2の入力
-        echo '<label><input type="radio" name="player2_action" value="up">↑</label>';
-        echo '<label><input type="radio" name="player2_action" value="left">←</label>';
-        echo '<label><input type="radio" name="player2_action" value="right">→</label>';
-        echo '<label><input type="radio" name="player2_action" value="down">↓</label>';
-        echo '<input type="hidden" name="player1_count" value="'.$player1_count.'">';
-        echo '<input type="hidden" name="player2_count" value="'.$player2_count.'">';
-        echo '<input type="submit" value="プレイヤー2を移動">';
+    echo "順番:".$player_turn;
+ 
+        //ラジオボタンでクリック
+        echo '<form action="clickgame.php" method="post">';
+        
+        if( $player_turn %2 == 1 ){
+            //player1の入力
+            echo "プレイヤー1の番です<br>";
+            echo '<label><input type="radio" name="player1_action" value="up">↑</label>';
+            echo '<label><input type="radio" name="player1_action" value="left">←</label>';
+            echo '<label><input type="radio" name="player1_action" value="right">→</label>';
+            echo '<label><input type="radio" name="player1_action" value="down">↓</label>';
+            echo '<input type="hidden" name="player1_count" value="'.$player1_count.'">';
+            echo '<input type="hidden" name="player2_count" value="'.$player2_count.'">';
+            echo '<input type="hidden" name="player_turn" value="'.$player_turn.'">';
+            echo '<input type="submit" value="プレイヤー1を移動">';
+        } else {   
+            //player2の入力
+            echo "プレイヤー2の番です<br>";
+            echo '<label><input type="radio" name="player2_action" value="up">↑</label>';
+            echo '<label><input type="radio" name="player2_action" value="left">←</label>';
+            echo '<label><input type="radio" name="player2_action" value="right">→</label>';
+            echo '<label><input type="radio" name="player2_action" value="down">↓</label>';
+            echo '<input type="hidden" name="player1_count" value="'.$player1_count.'">';
+            echo '<input type="hidden" name="player2_count" value="'.$player2_count.'">';
+            echo '<input type="hidden" name="player_turn" value="'.$player_turn.'">';
+            echo '<input type="submit" value="プレイヤー2を移動">';
+        }
+        
     echo '</form>';
     
     echo "1:".$player1_count."<br>";
@@ -68,25 +94,15 @@
 //     if($player1_count == $player2_count){
 //         $back = "<scriptjavascript:history.back()";
 //         echo $back;
-//         $alert = "<script type ='text/javascript'>alert('選びなおしてください');</script>";
-//         echo $alert;
+// //         $alert = "<script type ='text/javascript'>alert('選びなおしてください');</script>";
+// //         echo $alert;
 //     }
 
     if($player1_count == 33){
-        $player1_finish = TRUE ;
-        $flag_finish = true;
+        echo "プレイヤー1の勝利！";
+        echo '<br><a href="clickgame.php">もう1回遊ぶ</a><br>';
     } else if ($player2_count == 0){
-        $player2_finish = TRUE ;
-        $flag_finish = true;
-    }
-    
-    if(isset($flag_finish)){
-    
-        if($player1_finish == TRUE){
-            echo "プレイヤー1の勝利！";
-        } else if ($player2_finish == TRUE){
-            echo "プレイヤー2の勝利！";
-        }
+        echo "プレイヤー2の勝利！";
         echo '<br><a href="clickgame.php">もう1回遊ぶ</a><br>';
     }
     
