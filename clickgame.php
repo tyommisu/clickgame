@@ -50,6 +50,7 @@
         $player_turn = 1;
     }
     
+    //動作確認用
     echo "順番:".$player_turn;
  
     //ラジオボタンでクリック
@@ -81,6 +82,7 @@
         
     echo '</form>';
     
+    //動作確認用
     echo "1:".$player1_count."<br>";
     echo "2:".$player2_count."<br>";
     
@@ -94,10 +96,11 @@
     $player_encnt_flag = ($player1_count != $player2_count);
     
     //すべてTRUEだったらTRUE、1つでもFALSEがあればFALSE＋文言表示
-    
+ 
     $errer_flag = ($player_encnt_flag && $player1_ary_err_flag && $player2_ary_err_flag );
         if(isset($errer_flag)){
             if($errer_flag == FALSE){
+            //動作確認用
             echo "エラーフラグが立っています<br>";
             }
         }
